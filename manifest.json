@@ -1,0 +1,25 @@
+{
+  "name": "2PassWord",
+  "description": "轻松便捷地管理和自动填写网站的账号密码。",
+  "version": "0.3.0.1",
+
+  "permissions": [
+     "tabs","activeTab", "http://*/*","https://*/*", "http://*/","chrome://favicon/*"
+  ],
+  "web_accessible_resources": [ "contentPopup.html"],
+  "background": {
+    "scripts": ["./js/aes/aes.js","./js/reqwest.min.js","./js/background.js"],
+    "persistent": true
+  },
+  "options_page": "optionsE.html",
+  "browser_action": {
+     "default_icon": "images/page_ori_64.png",
+     "default_popup": "popup.html",
+     "default_title": "2PassWord"
+  },
+  "icons":
+    {
+      "64": "images/page_64.png"
+    },
+  "manifest_version": 2
+}

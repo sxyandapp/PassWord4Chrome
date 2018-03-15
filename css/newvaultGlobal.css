@@ -1,0 +1,178 @@
+/*
+******* Global *******
+*/
+
+html, body {
+  height: 100%;
+  width: 100%;
+}
+
+html, body, p, img {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: #D22D27;
+}
+
+a.nbtn {
+  display: inline-block;
+  text-decoration: none;
+}
+
+body, input, textarea {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+/*
+* We use button element for accesability purposes but we don't want to use any
+* defualt styline
+*/
+button {
+  background-color: transparent;
+  border: none;
+  color: inherit;
+  box-sizing: content-box;
+  vertical-align: top;
+  padding: 0;
+  font-size: inherit;
+  cursor: pointer;
+}
+
+.bulletList {
+  list-style-type: disc;
+  margin-top: 1em;
+  padding-left: 40px;
+}
+
+.clear {
+  clear: both;
+}
+
+.backgroundFrame {
+  display: none;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.displaynone {
+  display: none !important;
+}
+
+.autowidth {
+  width: auto !important;
+}
+
+
+
+/*
+******* Overlays ********
+*/
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(52, 61, 68, 0.6);
+  display: none;
+}
+
+/*
+******* Selecting ********
+*/
+
+.noSelect {
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+}
+
+.fillHeight {
+  height: 100%;
+}
+
+/*
+******* Action Buttons *******
+*/
+
+body .addButton:active {
+  padding-left: 30px;
+}
+
+.itemButtonCell {
+  width: 31px;
+  display: none;
+  vertical-align: middle;
+  text-align: right;
+}
+
+.itemButton {
+  display: inline-block;
+  border: 1px solid #DFE2E7;
+  height: 24px;
+  width: 24px;
+  border-radius: 2px;
+  cursor: pointer;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.rejectShare {
+  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAADFJREFUKBVjYMAC/v//fxuEsUgxMGETxCc2CDUw4vCcPNQfD9H9Q7If0A0A84d7sAIA+tQUTC5yqygAAAAASUVORK5CYII=');
+    border-radius: 4px;
+    background-color: #d32d27;
+}
+
+/*
+****** Global Hover States ******
+*/
+
+/* to dark*/
+.dialogHeaderButton:hover, .dialogLeftMenu li:hover:not(.selected), .tabMenuItem:hover:not(.selected){
+  background-color: RGBA(0,0,0,0.1);
+}
+
+.iconButton:hover, .tourStep:hover, .folderLabel:hover, #skipTour:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+/*
+***** Global Helpers *****
+*/
+
+.pullLeft{
+  float:left;
+}
+
+.pullRight{
+  float:right;
+}
+
+.noWrap{
+  white-space: nowrap;
+}
+
+.block{
+  display: block;
+}
+
+.inline{
+  display: inline;
+}
+
+.inlineblock{
+  display: inline-block;
+}

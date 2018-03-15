@@ -1,0 +1,331 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta name="2PassWord" content="" charset="utf-8">
+  <title>2PassWord Popup</title>
+  <link rel="stylesheet" href="css/popupfilltab.css">
+  <link rel="stylesheet" href="css/buttons.css">
+  <style>
+    body {
+      opacity: 0;
+      transition: 0.5s opacity;
+    }
+    
+    #contentdiv {
+      width: 360px;
+      border: none;
+    }
+    
+    #headerdiv {
+      background-color: #F4F4F4;
+      height: 76px;
+    }
+    
+    #search {
+      width: 283px;
+      height: 26px;
+      margin-left: 21px;
+      margin-top: 21px;
+      background-image: url(./images/Search.png);
+      background-repeat: no-repeat;
+      background-position: 10px center;
+      background-size: 16px;
+      padding-left: 30px;
+    }
+    
+    #headerback {
+      display: none;
+      padding-left: 30px;
+      padding-right: 20px;
+      line-height: 49px;
+      height: 49px;
+      background-image: url(images/Back.png);
+      background-position: 20px center;
+      background-repeat: no-repeat;
+      font-size: 13px;
+      cursor: pointer;
+      background-color: #F4F4F4;
+    }
+    
+    #headerback:hover {
+      background-color: #E2E2E2;
+    }
+    
+    #backLabel {
+      display: inline-block;
+      float: left;
+      min-width: 70px;
+      font-size: 14px;
+    }
+    
+    #groupLabel {
+      padding-left: 10px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      opacity: .5;
+      box-sizing: border-box;
+      text-align: right;
+    }
+    
+    input {
+      outline: none;
+    }
+    
+    #popupcontainer {
+      padding-bottom: 30px;
+      height: 246px;
+      width: 100%;
+    }
+    
+    .cellrow {
+      list-style: none;
+      display: table;
+      width: 100%;
+      opacity: 0.5;
+    }
+    
+    .cellrow:hover {
+      background-color: #F0F0F0;
+    }
+    
+    .cellrow.active {
+      opacity: 1;
+      cursor: pointer;
+    }
+    
+    .cellrow:hover {
+      opacity: 1;
+    }
+    
+    .cellimg {
+      background-size: 16px 16px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      padding: 2px 10px;
+      width: 33px;
+      display: table-cell;
+      background-image: url("data:image/gif;base64,R0lGODlhEAAQAIcAAAAAAExnf1BpgWR0iHZ6hHeBkX+GkYiOmpeaopucoaSlqqWmqrm9w7q+xL+/wry/xcXGyc3Oz9HS1NPU1tnZ2d/h4+Di5OLj5uPl5+Tk5OXm6O7u7+7v8O/w8e/w8vDw8fHx8vLy8/Pz8/Pz9PT09fX19fX29vb29vf39/f3+Pj4+Pj4+fn5+vr6+/v7/Pz8/P39/f7+/v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAAAAALAAAAAAQABAAAAiQAAEIHEiw4MAFCBEmQCjBIIAFMiLK8CBjA4QIBiFu2Fgh4oYJDgpq5Chxw4KCCiqSlKigIAKVGyowYNDgAYGCB2BWsHABgwYDBQvA/CCiBAoVBQoOUNlBhAkVLV4MKCigIgenK1zAiCGgYICKIEhAhRExgFcZHEKcYEG27NkOI1K0aCvDLMEAePPqteuwr8CAADs=");
+    }
+    
+    .cellstr {
+      width: 100%;
+    }
+    
+    .cellstr p {
+      margin: 10px 0;
+      line-height: 13px;
+      font-size: 13px;
+      font-weight: normal;
+    }
+    
+    .active .cellstr .cellname {
+      font-weight: bold;
+    }
+    
+    .cellconfig {
+      width: 56px;
+      height: 30px;
+      cursor: pointer;
+      display: table-cell;
+      background-size: 16px 16px;
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAA0ElEQVQ4T6WSAQ3CQAxFmQLACTgYCpAAKAAHIAEcDAXgACSAAySAAvhv6ZLmcqxHaNJclvX9tv+uGvwZ1Q98rdqb8umZSGCk4q1yozwql2nDSGAvYP0NRiwSeFvHlc7GdZ/YOqEA+w5t75lBwBfluGSCs4rm1hkxpsCHu7KOBHZmYOob30xz7ROg08LIl07MbDsqEG7hnADXdnLFwIDcfzb8LQBjDiZ1Me2D/QQ5OL263gm82xQWwX4CL3DQD55uUXQesALQQ9kUkVYUPeVQ6wMfKSQRE3iWtAAAAABJRU5ErkJggg==");
+    }
+    
+    .cellconfig:hover {
+      background-color: #E2E2E2;
+    }
+    
+    #moreDiv {
+      padding-bottom: 30px;
+      display: none;
+    }
+    
+    #moreDiv .row {
+      width: 100%;
+      display: block;
+      line-height: 30px;
+      padding-left: 26px;
+      cursor: pointer;
+    }
+    
+    #moreDiv .row:hover {
+      background-color: #F0F0F0;
+    }
+    
+    i {
+      color: red;
+      font-style: normal;
+    }
+    
+    .empty {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 246px;
+    }
+    /* content popup */
+    
+    #headerdiv {
+      height: 76px;
+      background-color: #f2f4f5;
+    }
+    
+    #header {
+      height: auto;
+    }
+    
+    #header input {
+      cursor: pointer;
+      border: none;
+    }
+    
+    #contentdiv {
+      width: 326px;
+    }
+    
+    #search {
+      width: 250px;
+    }
+    
+    .saveinput {
+      width: 286px;
+    }
+    
+    .relative {
+      position: relative;
+    }
+    
+    #popupcontainer {
+      height: 167px;
+    }
+    
+    .empty {
+      height: 167px;
+    }
+    
+    .showPassword {
+      background-color: transparent;
+      border: none;
+      color: inherit;
+      box-sizing: content-box;
+      vertical-align: top;
+      padding: 0;
+      font-size: inherit;
+      cursor: pointer;
+      width: 18px;
+      height: 100%;
+      background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAdxJREFUOBHdUjtIQmEYvV5fBUEFOggFLdkQFERkS0O0NEQQDRFBY15RHGqQrMGptgJR1JYgyIbAofYamipoK0inKFBIiB5Qvjvn+l+5We3RD/d+33fO+c7/lKR/Owy/7SwcDndZLJZp8L1CkykWi0d+v//hp55vRtFotNtoNG4ZDIYZNBibmiqoU+VyecXr9d7ruS9G8Xh8HuQOTNooqtVqTwgXzDFGgHcyAf6GsKQoygFrDrkeJAkm6xAmNRPgSWylB+JJfsyJUU8NtbFYbI01h7oimKyC2KhD6v8qm826bDZbO7a5LMtyrVQqbefz+WeHw3EOxZCmxeqCmGhThslck4lUrVZ3Q6FQ2Ww2H8IkiKY15sTIaSaM7KUHtxbQE4K8E9iwjlNzNGqcjpICMpa2CORVjwIbYI24p+G6fFDDhOaFHtoZTQA8xmytQvRYKBT68WYeE4nEODG3232Kt2W3Wq3XKO3EYPCOb8rj8ZyoRgRFQwppB2sIbmHswaGfscYhjwGLAesT/BPyWU7AumHEIhKJOE0m0z4E+rP5IIfRUg/q/xKmC7itjIY13hEBn8+XzuVyLtyMAuGNENFANSFGDqsc1ZtQ92VForERuEK8IyeBSqWS5kQN8s8nn9HVzS14VqbqAAAAAElFTkSuQmCC");
+      background-repeat: no-repeat;
+      background-position: center center;
+      position: absolute;
+      right: 0;
+      padding: 0 5px;
+      top: 0;
+    }
+    
+    .showPassword.selected {
+      background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAAAXNSR0IArs4c6QAAAiJJREFUOBHNkzFoU1EUhvNeQl4HQYdECLSgg05aOhTUKWQQCi1iBgkiOrjkJbxmKGpa6JBJkECG2IREcdAhuLiIg1NEsinoIIpEcLLEyUAoVR9J9DuX3HBTIwQnL5x37/nPf/577nn3BgL/w6jVavlKpbIgtVj/WhAiRcuybpD/sdPpnP6rULlcng+HwxcgniDhF6Pt+/6zXC73xRDxB4PBpWw2+/QPISk1GAyWSE4iEjxQ8QDBt8SWwcciwpkQYqfLYPcgHpIgSV2mV9gPsDjzEUwNYndd181p39YLRLYhN7QIeIOjHIO8gl3Ef6S5MsPzyMlrTFUEsEXgtgaZ39DAM5FI5DDH3LBt+xSY9MvHdrHjmB630ul00UIkhchjjco8HA7XM5nMTr1eb+ImBOMowMMkwkdx7wumB3hKjjYuTwcQ/jxan9MY8778HZK+Gphawt+0+/3+VXbrmUECi1RaBJsz8IeyJrZkYFJpD7umelStVuOU/ByCSiTwkwQHX3pyE3tHH15wt6KO47zHj2Ii8h1bow1N9dco+SX4eeybEEYisiwhUKbxLfqV4IK2wLRIF96qiAhRVSQLGZAfMF1XzujDjnskhHDNY74Gv8K1+KS5qiJxRj0RER/SHWY5glQnl1Mf+QPNdqnwrCmiePIRERLkAU5ce3B5ZydJtnhTbc/z2sKfNqxCoRCKxWJPCK7oBziNOBOGWJjdzTszU55J+g2ntvCk6kL2lQAAAABJRU5ErkJggg==');
+    }
+  </style>
+</head>
+
+<body>
+  <div id="contentdiv">
+
+    <div id="header" class="bg40dialog">
+      <div id="SB_iconbox" class="super40height bg40header" role="navigation">
+        <a id="SB_addico_a" class="super40icon floatleft tooltip40superlong"><input id="SB_addico_img" type="button" aria-label="保存站点信息" class="bg40header super40icon_icon SB_addico_img">
+          <span>保存密码到库</span>
+        </a>
+        <a id="SB_siteico_a" class="super40icon floatleft tooltip40superlong"><input id="SB_siteico_img" type="button" aria-label="站点" class="bg40header super40icon_icon SB_siteico_active">
+          <span>密码已保存</span>
+        </a>
+        <a id="SB_closeico_a" class="super40icon floatright tooltip40super"><input id="SB_closeico_img" type="button" aria-label="关闭" class="bg40header super40icon_icon SB_closeico_img">
+          <span>关闭</span>
+        </a>
+      </div>
+    </div>
+    <div id="headerdiv">
+      <input id="search">
+    </div>
+    <div id="headerback">
+      <div id="backLabel">返回</div>
+      <div id="groupLabel"></div>
+    </div>
+    <div id="popupcontainer">
+    </div>
+    <div id="moreDiv">
+      <div class="row" action='edit'>
+        <td action='edit'>编辑</td>
+      </div>
+      <div class="row" action='autocomplete'>
+        <td action='autocomplete'>自动填写</td>
+      </div>
+      <div class="row" action='copyusername'>
+        <td action='copyusername'>复制用户名</td>
+      </div>
+      <div class="row" action='copypassword'>
+        <td action='copypassword'>复制密码</td>
+      </div>
+      <div class="row" action='copyurl'>
+        <td action='copyurl'>复制网址</td>
+      </div>
+      <div class="row" action='closemore'>
+        <td action="closemore">返回</td>
+      </div>
+    </div>
+    <div id="lptabpopupsave" style="background-color: rgb(242, 244, 245);display: none;">
+      <div class="savesitediv">
+        <p style="background-color: rgb(242, 244, 245);">
+          <a href="#" class="tooltipgen1" tabindex="-1" draggable="false">
+            <span>这是此网页的名称或者网址。</span>
+            <label for="name" style="background-color: rgb(242, 244, 245);">名称：</label>
+          </a>
+        </p>
+        <input class="saveinput" spellcheck="false" type="text" id="name">
+      </div>
+      <div class="savesitediv">
+        <p style="background-color: rgb(242, 244, 245);">
+          <a href="#" class="tooltipgen1" tabindex="-1" draggable="false">
+            <span>你用什么登录此网站。</span>
+            <label for="u" style="background-color: rgb(242, 244, 245);">用户名：<label id="label-input1"></label>
+            </label>
+          </a>
+        </p>
+        <input class="saveinput" type="text" id="u">
+        <input class="saveinput" type="hidden" id="input1">
+      </div>
+      <div class="savesitediv">
+        <p style="background-color: rgb(242, 244, 245);">
+          <a href="#" class="tooltipgen1_40" tabindex="-1" draggable="false">
+            <span>您用来登录此网站的密码。</span>
+            <label for="p" style="background-color: rgb(242, 244, 245);">密码：<label id="label-input2"></label>
+            </label>
+          </a>
+        </p>
+        <div class="relative">
+          <input class="saveinput" type="password" id="p" style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">
+          <input class="saveinput" type="hidden" id="input2">
+          <button id="passwordIcon" class="showPassword iconButton" title="显示密码"></button>
+        </div>
+      </div>
+      <label id="url" style="display:none;"></label>
+      <label id="identify" style="display:none;"></label>
+      <hr>
+      <div class="savesitediv wrap2btns btnnomargshift" style="background-color: rgb(242, 244, 245);">
+        <div class="wrapinner">
+          <button class="nbtn btn_mini" id="savecancel">取消</button>
+          <button class="nbtn rbtn btn_mini" id="savesubmit">保存站点信息</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="./js/chinese.js" charset="utf-8"></script>
+<script src="./js/popup.js" charset="utf-8"></script>
+
+</html>
