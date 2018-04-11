@@ -39,6 +39,7 @@ function initClick() {
   port.postMessage({
     url: document.getElementById('dataBaseURL').value,
     key: document.getElementById('savePassword').value,
+    token: document.getElementById('dataBaseTOKEN').value,
   });
   port.onMessage.addListener(function (result) {
     document.getElementById('_loading').style.display = 'none';
@@ -58,6 +59,7 @@ function saveClick() {
   port.postMessage({
     url: document.getElementById('dataBaseURL').value,
     key: document.getElementById('savePassword').value,
+	token: document.getElementById('dataBaseTOKEN').value
   });
   port.onMessage.addListener(function (result) {
     document.getElementById('_loading').style.display = 'none';
@@ -81,6 +83,7 @@ function nextClick() {
   });
   port.postMessage({
     url: document.getElementById('dataBaseURL').value.replace(/^\s+|\s+$/ig, '')
+	,token:document.getElementById('dataBaseTOKEN').value
   });
   port.onMessage.addListener(function (result) {
     document.getElementById('_loading').style.display = 'none';
@@ -111,6 +114,7 @@ function clearClick() {
   port.postMessage({
     url: '',
     key: '',
+	token: '',
   });
   port.onMessage.addListener(function (result) {
     document.getElementById('_loading').style.display = 'none';

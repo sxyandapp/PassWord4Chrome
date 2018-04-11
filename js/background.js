@@ -193,7 +193,7 @@
         break;
       case "initDatabase": //request.url
         port.onMessage.addListener(function (request) {
-          background.initDatabase(request.url, request.key, function (result) {
+          background.initDatabase(request, function (result) {
             if (connecting)
               port.postMessage(result);
           });
@@ -201,23 +201,23 @@
         break;
       case "checkUrl": //request.url
         port.onMessage.addListener(function (request) {
-          background.checkUrl(request.url, function (result) {
+          background.checkUrl(request, function (result) {
             if (connecting)
               port.postMessage(result);
           });
         });
         break;
-      case "checkKey": //request.key
+      case "checkKey": //request.key,本地校验密码是否正确
         port.onMessage.addListener(function (request) {
-          background.checkKey(request.key, function (result) {
+          background.checkKey(request, function (result) {
             if (connecting)
               port.postMessage(result);
           });
         });
         break;
-      case "setKey": //request.key
+      case "setKey": //request.key,保存设置信息
         port.onMessage.addListener(function (request) {
-          background.setKey(request.url, request.key);
+          background.setKey(request);
           background.pullItems(function (result) {
             if (connecting)
               port.postMessage(result);
@@ -239,7 +239,6 @@
     lockKey: '',
     // 程序初始化，判断程序当前状态
     init: function () {
-
       if (localStorage.cfg_clearKeyOnLaunch == 'true') {
         localStorage.removeItem('privateKey');
       }
@@ -355,29 +354,32 @@
         });
       } else {
         reqwest({
-          url: background.getDatabase() ,
+			url: background.getDatabase() ,
 			type:'json',
-		contentType:'application/json',
-          method: 'GET',
-          success: function (response) {
-            response = response && response.data ? response.data : [];
-            var i, temp, decrypted, name, host, updateTime, userName, passWord, other, inputId1, inputId2, newItem,
-              items = [];
-            for (i in response) {
-              response[i].id = i;
-              items.push(response[i]);
-            }
-            z.items = items.reverse();
+			contentType:'application/json',
+			headers: {
+				'authorization': 'token '+ localStorage.token
+			}, 
+			method: 'GET',
+			success: function (response) {
+				response = response && response.data ? response.data : [];
+				var i, temp, decrypted, name, host, updateTime, userName, passWord, other, inputId1, inputId2, newItem,
+				  items = [];
+				for (i in response) {
+				  response[i].id = i;
+				  items.push(response[i]);
+				}
+				z.items = items.reverse();
 
-            chrome.browserAction.setIcon({
-              path: "images/page_64.png"
-            });
-            z.status = 'complete';
-            console.log('complete');
-            callback({
-              msg: 'ok',
-              items: [] ? [] : z.items
-            });
+				chrome.browserAction.setIcon({
+				  path: "images/page_64.png"
+				});
+				z.status = 'complete';
+				console.log('complete');
+				callback({
+				  msg: 'ok',
+				  items: [] ? [] : z.items
+				});
           },
           error: function (err) {
             z.status = 'network error';
@@ -418,6 +420,9 @@
           // url: "/collect-******/data.json",
           method: 'PATCH',
           data: JSON.stringify(data),
+			headers: {
+				'authorization': 'token '+ localStorage.token
+			}, 
           success: function (resp) {
             // 增加一个item 成功后重新拉取数据 传入回调函数
             that.pullItems(callback);
@@ -448,6 +453,9 @@
 			type:'json',
 			contentType:'application/json',
           method: 'DELETE',
+			headers: {
+				'authorization': 'token '+ localStorage.token
+			}, 
           success: function (resp) {
             // 删除一个item 成功后重新拉取数据 传入回调函数
             that.pullItems(callback);
@@ -461,15 +469,18 @@
       }
     },
     // 检查URL
-    checkUrl: function (url, callback) {
+    checkUrl: function (request, callback) {
       var that = this;
       this.encryptString = "";
       callback = callback || function () {};
       reqwest({
-        url: url ,
+        url: request.url ,
 		type:'json',
 		contentType:'application/json',
         method: 'GET',
+		headers: {
+			'authorization': 'token '+ request.token
+		}, 
         success: function (response) {
           if (response && response.authority && response.authority.encryptString) {
             that.encryptString = response.authority.encryptString;
@@ -491,11 +502,11 @@
       });
     },
     // 检查Key
-    checkKey: function (key, callback) {
+    checkKey: function (request, callback) {
       var that = this;
       callback = callback || function () {};
       if (this.encryptString) {
-        if (AES.decrypt(this.encryptString, key))
+        if (AES.decrypt(this.encryptString, request.key))
           callback({
             msg: 'ok'
           });
@@ -510,23 +521,24 @@
       }
     },
     // 使用lockKey将自定义密码加密后储存在localStorage中
-    setKey: function (url, key, lockKey) {
-      localStorage.url = url;
+    setKey: function (request, lockKey) {
+      localStorage.url = request.url;
       lockKey = lockKey || this.lockKey;
-      localStorage.privateKey = AES.encrypt(key, lockKey);
+      localStorage.privateKey = AES.encrypt(request.key, lockKey);
+	  localStorage.token = request.token;
+	  //localStorage
     },
     // 检查Key
-    initDatabase: function (url, key, callback) {
-      // 先设置了密码和url
-      localStorage.url = url;
-      var lockKey = this.lockKey;
-      localStorage.privateKey = AES.encrypt(key, lockKey);
+    initDatabase: function (request, callback) {
+      // 先保存密码和url等信息
+	  setKey(request);
+	  
       var that = this;
       callback = callback || function () {};
       var _encryptString = "authority/encryptString";
       var _data = "data";
       var data = {};
-      data[_encryptString] = AES.encrypt('test', key);
+      data[_encryptString] = AES.encrypt('test', request.key);
       reqwest({
         url: background.getDatabase() ,
 		type:'json',
@@ -534,6 +546,9 @@
         // url: "/collect-******/data.json",
         method: 'PATCH',
         data: JSON.stringify(data),
+		headers: {
+			'authorization': 'token '+ localStorage.token
+		}, 
         success: function (resp) {
           // 增加一个item 成功后重新拉取数据 传入回调函数
           that.pullItems(callback);
