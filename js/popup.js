@@ -130,14 +130,14 @@ var contentPopup = {
       if (response[i].available)
         itemStr += 'active';
       itemStr += '" aid=' + response[i].id + '>';
-      itemStr += '<div class="cellimg"></div>';
-      itemStr += '<div class="cellstr"><p class="cellname">';
+      // itemStr += '<div class="cellimg"></div>';
+      itemStr += '<div class="cellstr" style="margin-left:10px;cursor: pointer;" ><p class="cellname">';
       itemStr += response[i].name || '(empty)';
       itemStr += '</p>';
       itemStr += '<p class="cellinfo">';
       itemStr += response[i].userName || '(empty)';
       itemStr += '</p>';
-      itemStr += '</div><div class="cellconfig"></div></li>';
+      itemStr += '</div><div class="cellbutton_user" title="复制用户名" action="copyusername"></div><div class="cellbutton_password" title="复制密码" action="copypassword"></div><div class="cellconfig" action="edit"></div></li>';
     }
     //为空时显示empty页面
     if (response.length === 0) {
@@ -157,21 +157,24 @@ function eventFire() {
 		// alert();
 	// });
 
-  document.oncontextmenu = function (e) {
-    // 右键点击tr
-    if (e.target.tagName == 'LI' || e.target.parentNode.tagName == 'LI' || e.target.parentNode.parentNode.tagName == 'LI') {
-      var aid = getAid(e);
-      if (!aid) return;
-      document.getElementById('headerdiv').style.display = 'none';
-      document.getElementById('headerback').style.display = 'block';
-      document.getElementById('moreDiv').setAttribute('aid', aid);
-      document.getElementById('moreDiv').style.display = 'block';
-      document.getElementById('popupcontainer').style.display = 'none';
-      e.preventDefault();
-    }
+	// 右键点击tr
+  // document.oncontextmenu = function (e) {
+    
+    // if (e.target.tagName == 'LI' || e.target.parentNode.tagName == 'LI' || e.target.parentNode.parentNode.tagName == 'LI') {
+      // var aid = getAid(e);
+      // if (!aid) return;
+      // document.getElementById('headerdiv').style.display = 'none';
+      // document.getElementById('headerback').style.display = 'block';
+      // document.getElementById('moreDiv').setAttribute('aid', aid);
+      // document.getElementById('moreDiv').style.display = 'block';
+      // document.getElementById('popupcontainer').style.display = 'none';
+      // e.preventDefault();
+    // }
 
-  };
+  // };
 
+  
+  
   document.addEventListener('click', function (e) {
 	if (e.target.attributes['action'] && e.target.attributes['action'].value == 'buttonadd' ) {
 		  //localStorage.tpw_tabDialogId = document.getElementById('moreDiv').attributes['aid'].value;
@@ -195,7 +198,11 @@ function eventFire() {
       e.preventDefault();
       //动作 点击编辑
     } else if (e.target.attributes['action'] && e.target.attributes['action'].value == 'edit') {
-      localStorage.tpw_tabDialogId = document.getElementById('moreDiv').attributes['aid'].value;
+      var aid = getAid(e);
+      if (!aid) return;
+	
+      // localStorage.tpw_tabDialogId = document.getElementById('moreDiv').attributes['aid'].value;
+      localStorage.tpw_tabDialogId = aid;
       chrome.runtime.sendMessage({
         type: "openTabDialog"
       });
@@ -211,7 +218,10 @@ function eventFire() {
     } else if (e.target.attributes['action'] && (e.target.attributes['action'].value == 'copypassword' ||
         e.target.attributes['action'].value == 'copyusername' ||
         e.target.attributes['action'].value == 'copyurl')) {
-      var aid = document.getElementById('moreDiv').attributes['aid'].value;
+		
+      var aid = getAid(e);
+      if (!aid) return;
+      // var aid = document.getElementById('moreDiv').attributes['aid'].value;
       contentPopup.getItem(aid, function (result) {
         if (result.msg == 'ok') {
           var copyInput = document.createElement('input');
@@ -230,14 +240,14 @@ function eventFire() {
           contentPopup.closeContentPopup();
         }
       })
-    } else if (e.target.className == 'cellconfig') {
-      var aid = getAid(e);
-      if (!aid) return;
-      document.getElementById('headerdiv').style.display = 'none';
-      document.getElementById('headerback').style.display = 'block';
-      document.getElementById('moreDiv').setAttribute('aid', aid);
-      document.getElementById('moreDiv').style.display = 'block';
-      document.getElementById('popupcontainer').style.display = 'none';
+    // } else if (e.target.className == 'cellconfig') {
+      // var aid = getAid(e);
+      // if (!aid) return;
+      // document.getElementById('headerdiv').style.display = 'none';
+      // document.getElementById('headerback').style.display = 'block';
+      // document.getElementById('moreDiv').setAttribute('aid', aid);
+      // document.getElementById('moreDiv').style.display = 'block';
+      // document.getElementById('popupcontainer').style.display = 'none';
       // 点击tr
     } else if (e.target.tagName == 'LI' || e.target.parentNode.tagName == 'LI' || e.target.parentNode.parentNode.tagName == 'LI') {
       var aid = getAid(e);
@@ -246,6 +256,7 @@ function eventFire() {
         contentPopup.insertContentScript(aid);
       }
     } else if (window.content) {
+		
       contentPopupEvent(e);
     }
   });
