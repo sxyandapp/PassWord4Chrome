@@ -1,3 +1,7 @@
+**懒得看介绍的可直接下载：** https://gitee.com/sxyandapp/PassWord4Chrome/attach_files
+
+---
+
 chrome密码插件，能自动或手动保存密码到指定服务器，所有密码信息经过aes加密后上传。本地不保存任何密码信息。
 此项目fork自github项目2PassWord：https://github.com/Likkrit/2PassWord.git
 此项目对原项目进行了如下修改和优化：
@@ -24,8 +28,7 @@ chrome密码插件，能自动或手动保存密码到指定服务器，所有�
 请求的json格式和patch请求类似，不同的是通过key值列表判断要删除哪个属性;
 响应体为空字符串或{}。
 
-* 打包：
-通过chrome扩展功能管理的打包功能打包
+* 打包：通过chrome扩展功能管理的打包功能打包
 
 ---
 
