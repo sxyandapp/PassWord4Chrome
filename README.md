@@ -32,4 +32,4 @@ chrome密码插件，能自动或手动保存密码到指定服务器，所有�
 
 ---
 
-原始作者及介绍：https://github.com/Likkrit/2PassWord.git
+ _原始作者及介绍：https://github.com/Likkrit/2PassWord.git_ 
