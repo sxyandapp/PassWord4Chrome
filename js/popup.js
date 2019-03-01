@@ -127,8 +127,9 @@ var contentPopup = {
     response = response || [];
     for (var i = 0; i < response.length; i++) {
       itemStr += '<li class="cellrow ';
-      if (response[i].available)
-        itemStr += 'active';
+		if (response[i].available){
+			itemStr += 'active';
+		}
       itemStr += '" aid=' + response[i].id + '>';
       // itemStr += '<div class="cellimg"></div>';
       itemStr += '<div class="cellstr" style="margin-left:10px;cursor: pointer;" ><p class="cellname">';

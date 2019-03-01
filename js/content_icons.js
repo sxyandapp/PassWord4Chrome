@@ -72,6 +72,7 @@ function contentIcons() {
   // 表单提交事件绑定 结束
 
   // 提交后显示是否记住密码 按钮 开始
+  return;//by shixiaoyong 2018-5-15
   if (top == self) {
     chrome.runtime.sendMessage({
       type: "isShowTips",
@@ -169,35 +170,36 @@ contentIcons.prototype.domNodeFind = function () {
 }
 // 符合条件的输入框
 contentIcons.prototype.inputCollect = function () {
-  var inputArr = [];
-  var inputs = document.getElementsByTagName('input');
-  for (var i = 0; i < inputs.length; i++) {
-    if (this.inputTypeCheck(inputs[i])) {
-      inputArr.push(inputs[i]);
-    }
-  }
-  inputs = [];
-  for (i = 0; i < inputArr.length; i++) {
-    inputs.push(this.offsetTL(inputArr[i]));
-    inputs[i].target = inputArr[i];
-  }
-  for (i = 0; i < inputs.length; i++) {
-    for (var j = i + 1; j < inputs.length; j++) {
-      if (inputs[i].left == inputs[j].left &&
-        inputs[i].top != inputs[j].top &&
-        (!inputs[i].offsetWidth || (inputs[i].offsetWidth && inputs[i].offsetWidth > 100))) {
-        inputs[i].active = true;
-        inputs[j].active = true;
-      }
-    }
-  }
-  inputArr = [];
-  for (i = 0; i < inputs.length; i++) {
-    if (inputs[i].active) {
-      inputArr.push(inputs[i]);
-    }
-  }
-  this.inputArr = inputArr;
+  //在输入框右侧显示可点击的图标 by shixiaoyong 2018-5-15
+  // var inputArr = [];
+  // var inputs = document.getElementsByTagName('input');
+  // for (var i = 0; i < inputs.length; i++) {
+    // if (this.inputTypeCheck(inputs[i])) {
+      // inputArr.push(inputs[i]);
+    // }
+  // }
+  // inputs = [];
+  // for (i = 0; i < inputArr.length; i++) {
+    // inputs.push(this.offsetTL(inputArr[i]));
+    // inputs[i].target = inputArr[i];
+  // }
+  // for (i = 0; i < inputs.length; i++) {
+    // for (var j = i + 1; j < inputs.length; j++) {
+      // if (inputs[i].left == inputs[j].left &&
+        // inputs[i].top != inputs[j].top &&
+        // (!inputs[i].offsetWidth || (inputs[i].offsetWidth && inputs[i].offsetWidth > 100))) {
+        // inputs[i].active = true;
+        // inputs[j].active = true;
+      // }
+    // }
+  // }
+  // inputArr = [];
+  // for (i = 0; i < inputs.length; i++) {
+    // if (inputs[i].active) {
+      // inputArr.push(inputs[i]);
+    // }
+  // }
+  // this.inputArr = inputArr;
 }
 // 输入框类型检测
 contentIcons.prototype.inputCheck2 = function (ele) {

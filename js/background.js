@@ -313,7 +313,8 @@
         var activeItem;
         var newItems = this.clones(z.items);
         for (var i = 0; i < newItems.length; i++) {
-          if (url.indexOf(newItems[i].name) > 0 || url.indexOf(newItems[i].host) > 0 || (newItems[i].identify && url.indexOf(newItems[i].identify) >= 0)) {
+          //if (url.indexOf(newItems[i].name) > 0 || url.indexOf(newItems[i].host) > 0 || (newItems[i].identify && url.indexOf(newItems[i].identify) >= 0)) {
+		  if (url.indexOf(newItems[i].host) > 0 || (newItems[i].identify && url.indexOf(newItems[i].identify) >= 0)) {
             activeItem = this.decode(newItems[i].z); // activeItem 被赋值为一个新的对象指针
             activeItem.id = newItems[i].id;
             activeItem.name = newItems[i].name || '';
@@ -600,6 +601,7 @@
   };
   var replaceQuotes = function (v) {
     //替换引号、括号
+	//大括号,小括号 2018-5-15
     var entry = {
       "[": "\\[",
       ']': '\\]',
@@ -626,6 +628,7 @@
         return ($1 + quotes1 + name + quotes2 + $5);
       });
     v = v.replace(/\"other\":.*\"inputId1/ig, '"inputId1').replace(/\"host\":.*\"inputId1/ig, '"updateTime');
+	v = v.replace(/'/g, "\\'");
 
     return v;
   };

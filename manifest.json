@@ -1,5 +1,5 @@
 {
-  "name": "2PassWord",
+  "name": "PassWord4Chrome",
   "description": "轻松便捷地管理和自动填写网站的账号密码。",
   "version": "0.3.0.1",
 
@@ -15,7 +15,7 @@
   "browser_action": {
      "default_icon": "images/page_ori_64.png",
      "default_popup": "popup.html",
-     "default_title": "2PassWord"
+     "default_title": "PassWord4Chrome"
   },
   "icons":
     {
