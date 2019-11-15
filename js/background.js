@@ -29,12 +29,13 @@
         allFrames: true
       });
     } else if (request.type == "insertContentIconsScript") {
-      setTimeout(function () {
-        chrome.tabs.executeScript(null, {
-          file: "./js/content_icons.js",
-          allFrames: request.allFrames ? true : false
-        });
-      }, 300);
+        //页面中插入js和操作按钮等 by simon 2019-4-28
+      // setTimeout(function () {
+      //   chrome.tabs.executeScript(null, {
+      //     file: "./js/content_icons.js",
+      //     allFrames: request.allFrames ? true : false
+      //   });
+      // }, 300);
     }
     // openContentPopup
     else if (request.type == "openContentPopup") {
@@ -287,7 +288,7 @@
           item.id = z.items[i].id;
           item.name = z.items[i].name || '';
           item.host = z.items[i].host || '';
-          item.identify = z.items[i].identify || '';
+          item.identify = z.items[i].identify;
           item.updateTime = z.items[i].updateTime || '';
           return item;
         }
@@ -309,21 +310,27 @@
     // 获取指定tab url的账户列表，列表根据url排序过
     getItems: function (url, callback) {
       var items = [];
-      if (url) {
+      if (url) {//浏览器当前的url
         var activeItem;
         var newItems = this.clones(z.items);
         for (var i = 0; i < newItems.length; i++) {
-          //if (url.indexOf(newItems[i].name) > 0 || url.indexOf(newItems[i].host) > 0 || (newItems[i].identify && url.indexOf(newItems[i].identify) >= 0)) {
-		  if (url.indexOf(newItems[i].host) > 0 || (newItems[i].identify && url.indexOf(newItems[i].identify) >= 0)) {
-            activeItem = this.decode(newItems[i].z); // activeItem 被赋值为一个新的对象指针
-            activeItem.id = newItems[i].id;
-            activeItem.name = newItems[i].name || '';
-            activeItem.host = newItems[i].host || '';
-            activeItem.identify = newItems[i].identify || '';
-            activeItem.updateTime = newItems[i].updateTime || '';
-            activeItem.available = true;
-            newItems[i].available = true; // 将当前对象标记
-            items.push(activeItem);
+          if(!newItems[i].identify){
+              continue;
+          }
+          let sss= newItems[i].identify.split("|");
+          for (let j=0;j<sss.length;j++){
+              if (url.indexOf(sss[j]) >= 0) {
+                  activeItem = this.decode(newItems[i].z); // activeItem 被赋值为一个新的对象指针
+                  activeItem.id = newItems[i].id;
+                  activeItem.name = newItems[i].name || '';//名字
+                  activeItem.host = newItems[i].host || '';//没用
+                  activeItem.identify = newItems[i].identify;//识别路径
+                  activeItem.updateTime = newItems[i].updateTime || '';
+                  activeItem.available = true;
+                  newItems[i].available = true; // 将当前对象标记
+                  items.push(activeItem);
+                break;
+              }
           }
         }
         for (i = 0; i < newItems.length; i++) {
@@ -332,7 +339,7 @@
           activeItem.id = newItems[i].id;
           activeItem.name = newItems[i].name || '';
           activeItem.host = newItems[i].host || '';
-          activeItem.identify = newItems[i].identify || '';
+          activeItem.identify = newItems[i].identify;
           activeItem.updateTime = newItems[i].updateTime || '';
           items.push(activeItem);
           // items.push(newItems[i]);
@@ -405,7 +412,7 @@
       var _data_z = "data/" + id + "/z";
       data[_data_name] = newItem.name;
       data[_data_host] = newItem.host;
-      data[_data_identify] = newItem.identify || '';
+      data[_data_identify] = newItem.identify;
       data[_data_updateTime] = new Date().getTime();
       data[_data_z] = packedEncryped;
       if (this.notAccess()) {
@@ -629,7 +636,6 @@
       });
     v = v.replace(/\"other\":.*\"inputId1/ig, '"inputId1').replace(/\"host\":.*\"inputId1/ig, '"updateTime');
 	v = v.replace(/'/g, "\\'");
-
     return v;
   };
   // 当一个标签加载完成时，此事件触发

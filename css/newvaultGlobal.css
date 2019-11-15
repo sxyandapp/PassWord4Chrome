@@ -130,9 +130,10 @@ body .addButton:active {
 }
 
 .rejectShare {
-  background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAADFJREFUKBVjYMAC/v//fxuEsUgxMGETxCc2CDUw4vCcPNQfD9H9Q7If0A0A84d7sAIA+tQUTC5yqygAAAAASUVORK5CYII=');
+  /*background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAAAXNSR0IArs4c6QAAADFJREFUKBVjYMAC/v//fxuEsUgxMGETxCc2CDUw4vCcPNQfD9H9Q7If0A0A84d7sAIA+tQUTC5yqygAAAAASUVORK5CYII=');*/
     border-radius: 4px;
     background-color: #d32d27;
+    color:#fff;
 }
 
 /*

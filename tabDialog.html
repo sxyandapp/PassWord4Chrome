@@ -10,6 +10,7 @@
     <link rel="stylesheet" type="text/css" href="css/siteDialog.css">
     <link rel="stylesheet" type="text/css" href="css/loading.css">
     <script src="js/tabDialog.js" charset="utf-8"></script>
+    <script src="js/jquery-1.11.1.min.js" charset="utf-8"></script>
   </head>
 
   <body class="tab">
@@ -18,18 +19,18 @@
       <ul></ul>
     </div>
 
-    <div class="dialog responsive maximized2" role="dialog" aria-labelledby="siteDialogTitle" id="siteDialog" style="display: block; max-height: 566px;">
+    <div class="dialog responsive maximized2" role="dialog" aria-labelledby="siteDialogTitle" id="siteDialog" style="display: block; max-height: 706px;">
       <button class="focusCycler"></button>
       <div class="dialogHeader icon dialogHeaderButtonsEnabled titleEnabled">
         <div class="dialogHeaderInner">
-          <span class="dialogHeaderTitle" id="siteDialogTitle">编辑站点信息</span>
+          <span class="dialogHeaderTitle" id="siteDialogTitle">添加/编辑</span>
         </div>
-        <div class="dialogHeaderButtons">
-          <button title="最大化" class="dialogMaximizeButton dialogHeaderButton"></button>
-          <button title="关闭" class="dialogCloseButton dialogHeaderButton"></button>
-        </div>
+        <!--<div class="dialogHeaderButtons">-->
+          <!--<button title="最大化" class="dialogMaximizeButton dialogHeaderButton"></button>-->
+          <!--<button title="关闭" class="dialogCloseButton dialogHeaderButton"></button>-->
+        <!--</div>-->
       </div>
-      <div class="dialogContent dialogContentFixed" style="bottom: 67px; top: 50px;">
+      <div class="dialogContent dialogContentFixed" style="bottom: 66px; top: 50px;">
         <div class="mainView" style="display: block;">
           <div class="siteTypeahead" style="display:none;">
             <label for="siteDialogURL" class="label first">网址：</label>
@@ -42,14 +43,14 @@
               </div>
             </div>
           </div>
-          <div class="twoColumn leftColumn">
+          <div class="twoColumn leftColumn" >
             <label for="siteDialogName" class="label">名称：</label>
             <input id="siteDialogId" type="hidden">
             <input id="siteDialogName" dialogfield="name" class="dialogInput" type="text" spellcheck="false">
           </div>
           <div class="twoColumn rightColumn">
             <div>
-              <label for="siteDialogGroup" class="label">识别路径:</label>
+              <label for="siteDialogGroup" class="label">识别路径(|分隔):</label>
               <div class="dropdownContainer" style="margin: 0px;">
                 <div class="relative">
                   <div class="dropdownHint" style="line-height: 30px; padding-left: 5px; padding-right: 35px; font-weight: 400; left: 1px; right: 1px;">
@@ -84,37 +85,23 @@
           <table class="saveAllFields"></table>
           <label for="siteDialogNotes" class="label" style="display:none;">备注：</label>
           <textarea id="siteDialogNotes" dialogfield="extra" class="dialogInput responsiveTextArea" spellcheck="false" style="height: calc(100% - 409px);display:none;"></textarea>
-          <table class="fieldsTable" style="
-    margin: 20px 0 5px 0;
-">
-            <thead>
-              <tr class="settingsHeader">
-                <th>输入框</th>
-                <th>识别字段</th>
-              </tr>
-            </thead>
 
+          <table class="fieldsTable" style="margin: 20px 0 5px 0;" border="1">
             <tbody class="fieldsElement">
-              <tr class="settingsRow">
-                <td class="settingLabel">用户名</td>
+              <tr >
+                <td class="" style="width:20%;text-align: right;">
+                    用户名识别字段(|分隔)
+                </td>
                 <td class="formFieldValue">
-                  <div><input id="dialogInput1" class="dialogInput" type="text" spellcheck="false">
-                    <div class="rightItemButtons">
-                      <button class="itemButton rejectShare" vaultaction="remove" title="移除" allowmultiple="false"></button>
-                    </div>
-                  </div>
+                     <input id="dialogInput1" class="dialogInput " spellcheck="false" style="margin: 0px;">
                 </td>
               </tr>
-              <tr class="settingsRow odd">
-                <td class="settingLabel">密码</td>
+              <tr >
+                <td class="" style="width:20%;text-align: right;">
+                    密码识别字段(|分隔)
+                </td>
                 <td class="formFieldValue">
-                  <div>
-                    <div class="relative" style="margin: 0px;"><input id="dialogInput2" class="dialogInput password" spellcheck="false" style="margin: 0px;">
-                    </div>
-                    <div class="rightItemButtons">
-                      <button class="itemButton rejectShare" vaultaction="remove" title="移除" allowmultiple="false"></button>
-                    </div>
-                  </div>
+                     <input id="dialogInput2" class="dialogInput " spellcheck="false" style="margin: 0px;">
                 </td>
               </tr>
             </tbody>
