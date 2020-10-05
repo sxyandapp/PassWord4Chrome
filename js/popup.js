@@ -135,9 +135,9 @@ var contentPopup = {
             itemStr += '<div class="cellstr" style="margin-left:10px;cursor: pointer;" ><p class="cellname">';
             itemStr += response[i].name || '(empty)';
             itemStr += '</p>';
-            itemStr += '<p class="cellinfo">';
-            itemStr += response[i].userName || '(empty)';
-            itemStr += '</p>';
+            // itemStr += '<p class="cellinfo">';
+            // itemStr += response[i].userName || '(empty)';
+            // itemStr += '</p>';
             itemStr += '</div><div class="cellbutton_user" title="复制用户名" action="copyusername"></div><div class="cellbutton_password" title="复制密码" action="copypassword"></div><div class="cellconfig" action="edit"></div></li>';
         }
         //为空时显示empty页面
