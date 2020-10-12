@@ -8,7 +8,7 @@
   ],
   "web_accessible_resources": [ "contentPopup.html"],
   "background": {
-    "scripts": ["./js/aes/aes.js","./js/reqwest.min.js","./js/background.js"],
+    "scripts": ["./js/aes/aes.js","./js/otpauth.min.js","./js/reqwest.min.js","./js/background.js"],
     "persistent": true
   },
   "options_page": "optionsE.html",

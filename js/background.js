@@ -14,7 +14,16 @@
             var item = null;
             for (var i = 0; i < z.items.length; i++) {
                 if (z.items[i].id==request.id) {
-                    item = JSON.stringify(background.getItem(request.id));
+                    itemt = background.getItem(request.id);
+
+                    if (itemt.type == 'otp'){
+                        let totp = new OTPAuth.TOTP({
+                            secret: itemt.passWord
+                        });
+                        // Generate a token.
+                        itemt.passWord = totp.generate();
+                    }
+                    item = JSON.stringify(itemt);
                 }
             }
             item = replaceQuotes(item);
@@ -294,6 +303,7 @@
                     var item = this.decode(z.items[i].z);
                     item.id = z.items[i].id;
                     item.name = z.items[i].name || '';
+                    item.type = z.items[i].type || '';
                     item.host = z.items[i].host || '';
                     item.identify = z.items[i].identify;
                     item.updateTime = z.items[i].updateTime || '';
@@ -330,6 +340,7 @@
                             activeItem = this.decode(newItems[i].z); // activeItem 被赋值为一个新的对象指针
                             activeItem.id = newItems[i].id;
                             activeItem.name = newItems[i].name || '';//名字
+                            activeItem.type = newItems[i].type || '';//类型
                             activeItem.host = newItems[i].host || '';//没用
                             activeItem.identify = newItems[i].identify;//识别路径
                             activeItem.updateTime = newItems[i].updateTime || '';
@@ -345,6 +356,7 @@
                     activeItem = this.decode(newItems[i].z);
                     activeItem.id = newItems[i].id;
                     activeItem.name = newItems[i].name || '';
+                    activeItem.type = newItems[i].type || '';
                     activeItem.host = newItems[i].host || '';
                     activeItem.identify = newItems[i].identify;
                     activeItem.updateTime = newItems[i].updateTime || '';
@@ -415,11 +427,13 @@
             packed = newItem.userName + ',' + newItem.passWord + ',' + newItem.other + ',' + newItem.inputId1 + ',' + newItem.inputId2;
             packedEncryped = AES.encrypt(packed, this.getKey());
             var _data_name = "data/" + id + "/name";
+            var _data_type = "data/" + id + "/type";
             var _data_host = "data/" + id + "/host";
             var _data_identify = "data/" + id + "/identify";
             var _data_updateTime = "data/" + id + "/updateTime";
             var _data_z = "data/" + id + "/z";
             data[_data_name] = newItem.name;
+            data[_data_type] = newItem.type;
             data[_data_host] = newItem.host;
             data[_data_identify] = newItem.identify;
             data[_data_updateTime] = new Date().getTime();

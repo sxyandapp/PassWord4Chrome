@@ -112,6 +112,7 @@ var contentPopup = {
             c.push({
                 id: items[i].id,
                 name: items[i].name,
+                type: items[i].type,
                 name_py: makePy(items[i].name).toString(),
                 userName: items[i].userName,
                 userName_py: makePy(items[i].userName).toString(),
@@ -138,7 +139,12 @@ var contentPopup = {
             // itemStr += '<p class="cellinfo">';
             // itemStr += response[i].userName || '(empty)';
             // itemStr += '</p>';
-            itemStr += '</div><div class="cellbutton_user" title="复制用户名" action="copyusername"></div><div class="cellbutton_password" title="复制密码" action="copypassword"></div><div class="cellconfig" action="edit"></div></li>';
+            if (response[i].type =='otp') {
+                itemStr +='</div><div class="cellbutton_password otp" title="复制密码" action="copypassword"></div><div class="cellconfig" action="edit"></div></li>';
+            }else{
+                itemStr += '</div><div class="cellbutton_user" title="复制用户名" action="copyusername"></div><div class="cellbutton_password" title="复制密码" action="copypassword"></div><div class="cellconfig" action="edit"></div></li>';
+            }
+
         }
         //为空时显示empty页面
         if (response.length === 0) {
@@ -229,8 +235,17 @@ function eventFire() {
                         copyInput.value = result.item.host;
                     else if (e.target.attributes['action'].value == 'copyusername')
                         copyInput.value = result.item.userName;
-                    else if (e.target.attributes['action'].value == 'copypassword')
-                        copyInput.value = result.item.passWord;
+                    else if (e.target.attributes['action'].value == 'copypassword'){
+                        if (result.item.type == 'otp' && result.item.passWord){
+                            let totp = new OTPAuth.TOTP({
+                                secret: result.item.passWord
+                            });
+                            // Generate a token.
+                            copyInput.value = totp.generate();
+                        }else {
+                            copyInput.value = result.item.passWord;
+                        }
+                    }
                     copyInput.style.opacity = '0';
                     copyInput.id = 'copyInput';
                     document.body.appendChild(copyInput);

@@ -62,11 +62,18 @@
               </div>
             </div>
           </div>
-          <div class="twoColumn leftColumn hideSaveAll">
+          <div class="" >
+            <label for="siteDialogType" class="label">类型：</label>
+            <select style="width:49%;" id="siteDialogType" dialogfield="type" class="dialogInput" type="text" spellcheck="false" autocomplete="off">
+                <option value="password">用户名密码</option>
+                <option value="otp">OTP</option>
+            </select>
+          </div>
+          <div class="twoColumn leftColumn hideSaveAll" id="siteDialogDivUsername" >
             <label for="siteDialogUsername" class="label">用户名：</label>
             <input id="siteDialogUsername" dialogfield="unencryptedUsername" class="dialogInput" type="text" spellcheck="false" autocomplete="off">
           </div>
-          <div class="twoColumn rightColumn hideSaveAll">
+          <div class="twoColumn  hideSaveAll">
             <div class="relative">
               <label for="siteDialogPassword" class="label">密码：</label>
               <div class="relative" style="margin: 0px;"><input id="siteDialogPassword" dialogfield="password" class="dialogInput passwordToggle password" type="password" autocomplete="off" spellcheck="false" style="margin: 0px;">
@@ -88,7 +95,7 @@
 
           <table class="fieldsTable" style="margin: 20px 0 5px 0;" border="1">
             <tbody class="fieldsElement">
-              <tr >
+              <tr id="dialogDivInput1">
                 <td class="" style="width:20%;text-align: right;">
                     用户名识别字段(|分隔)
                 </td>

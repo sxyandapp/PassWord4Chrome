@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
       $("#dialogInput1").val(item.inputId1);
       $("#dialogInput2").val(item.inputId2);
 
+      $("#siteDialogType").val(item.type||'password');
+      $("#siteDialogType").change();
+
       localStorage.removeItem('tpw_tabDialogForms');
   } else if (localStorage.tpw_tabDialogId) {
     var port = chrome.runtime.connect({
@@ -33,6 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
       $("#siteDialogGroup").val(result.item.identify);
       $("#dialogInput1").val(result.item.inputId1);
       $("#dialogInput2").val(result.item.inputId2);
+
+      $("#siteDialogType").val(result.item.type||'password');
+      $("#siteDialogType").change();
     });
     localStorage.removeItem('tpw_tabDialogId');
   }
@@ -82,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var newItem = {
             id: document.getElementById('siteDialogId').value || '',
             name: document.getElementById('siteDialogName').value || '',
+            type: document.getElementById('siteDialogType').value || '',
             userName: document.getElementById('siteDialogUsername').value || '',
             passWord: document.getElementById('siteDialogPassword').value || '',
             identify: $("#siteDialogGroup").val(),
@@ -107,6 +114,12 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
+    });
+
+    $("#siteDialogType").on('change',function(){
+        visible = ($(this).val()=='password' || $(this).val()=='')?'':'none';
+        $("#siteDialogDivUsername").css('display',visible );
+        $("#dialogDivInput1").css('display',visible );
     });
 
 });
